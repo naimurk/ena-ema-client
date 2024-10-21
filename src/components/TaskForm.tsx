@@ -88,7 +88,7 @@ const TaskForm = ({ task, onClose }) => {
   return (
     <form
       onSubmit={handleSubmit(onSubmit)}
-      className="space-y-6 bg-white p-6 rounded-lg shadow-md max-w-lg mx-auto"
+      className="space-y-6 bg-white p-6 rounded-lg shadow-md max-w-full mx-auto "
     >
       {/* Task Name */}
       <div className="flex flex-col">

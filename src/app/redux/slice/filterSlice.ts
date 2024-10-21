@@ -4,7 +4,7 @@ const initialState = {
   search: '',
   completed: '',
   priority: '',
-  tag: '',  // Add tag state
+  tags: '',  // Add tag state
 };
 
 const filterSlice = createSlice({

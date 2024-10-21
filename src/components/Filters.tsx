@@ -8,9 +8,8 @@ const Filters = () => {
 
   const handleChange = (e) => {
     const { name, value } = e.target;
-    if (e?.target?.value) {
-      dispatch(setFilter({ [name]: value }));
-    }
+
+    dispatch(setFilter({ [name]: value }));
   };
 
   const handleReset = () => {
@@ -30,14 +29,14 @@ const Filters = () => {
           className="flex-1 border border-gray-300 rounded-lg p-2 focus:outline-none focus:ring focus:ring-blue-500"
         />
         <select
-          name="status"
+          name="completed"
           value={filters.status}
           onChange={handleChange}
           className="flex-1 border border-gray-300 rounded-lg p-2 focus:outline-none focus:ring focus:ring-blue-500"
         >
           <option value="">Select Status</option>
-          <option value={true}>Completed</option>
-          <option value={false}>Pending</option>
+          <option value={"true"}>Completed</option>
+          <option value={"false"}>Pending</option>
         </select>
         <select
           name="priority"
@@ -52,7 +51,7 @@ const Filters = () => {
         </select>
         {/* New Tag Select Field */}
         <select
-          name="tag"
+          name="tags"
           value={filters.tag}
           onChange={handleChange}
           className="flex-1 border border-gray-300 rounded-lg p-2 focus:outline-none focus:ring focus:ring-blue-500"
@@ -71,7 +70,6 @@ const Filters = () => {
           >
             Reset
           </button>
-          
         </div>
       </form>
     </div>

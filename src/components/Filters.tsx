@@ -30,7 +30,7 @@ const Filters = () => {
         />
         <select
           name="completed"
-          value={filters.status}
+          value={filters.completed}
           onChange={handleChange}
           className="flex-1 border border-gray-300 rounded-lg p-2 focus:outline-none focus:ring focus:ring-blue-500"
         >
@@ -52,7 +52,7 @@ const Filters = () => {
         {/* New Tag Select Field */}
         <select
           name="tags"
-          value={filters.tag}
+          value={filters.tags}
           onChange={handleChange}
           className="flex-1 border border-gray-300 rounded-lg p-2 focus:outline-none focus:ring focus:ring-blue-500"
         >

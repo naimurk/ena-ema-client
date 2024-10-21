@@ -10,6 +10,17 @@ import {
 } from "@/app/redux/features/taskApi/taskApi";
 
 const TaskTable = () => {
+
+  const isDueIn24Hours = (dueDate) => {
+    const currentTime = new Date().getTime();
+    const taskDueTime = new Date(dueDate).getTime();
+    const timeDifference = taskDueTime - currentTime;
+  
+    // Check if the task is due in less than 24 hours (24 * 60 * 60 * 1000 milliseconds)
+    return timeDifference <= 24 * 60 * 60 * 1000;
+  };
+  
+
   const {
     data: tasksData,
     isLoading,
@@ -130,12 +141,27 @@ const TaskTable = () => {
                     <td className="border border-gray-300 px-4 py-2">
                       {task.description}
                     </td>
-                    <td className="border border-gray-300 px-4 py-2">
+                    <td
+                      className={`border px-4 py-2 border-gray-300 ${
+                        task.reminder && isDueIn24Hours(task.dueDate)
+                          ? "text-yellow-500 animate-pulse font-bold"
+                          : ""
+                      }`}
+                    >
                       {task.dueDate}
                     </td>
-                    <td className="border border-gray-300 px-4 py-2">
+                    <td
+                      className={`border border-gray-300 font-medium px-4 py-2 ${
+                        task.priority === "Low"
+                          ? "text-green-500"
+                          : task.priority === "Medium"
+                          ? "text-yellow-500"
+                          : "text-red-500"
+                      }`}
+                    >
                       {task.priority}
                     </td>
+
                     <td
                       className={`border border-gray-300 px-4 py-2 ${
                         task.completed ? " text-gray-400" : ""

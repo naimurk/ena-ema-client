@@ -2,7 +2,7 @@ import { createSlice } from '@reduxjs/toolkit';
 
 const initialState = {
   search: '',
-  status: '',
+  completed: '',
   priority: '',
   tag: '',  // Add tag state
 };

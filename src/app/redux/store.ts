@@ -1,9 +1,11 @@
 import { configureStore } from '@reduxjs/toolkit'
 import { baseApi } from './api/baseApi'
+import filterReducer from "./slice/filterSlice"
 
 export const store = configureStore({
   reducer: {
     [baseApi.reducerPath]: baseApi.reducer,
+    filter : filterReducer
 
   },
   middleware: (getDefaultMiddleware) =>

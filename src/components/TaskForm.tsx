@@ -50,9 +50,11 @@ const TaskForm = ({ task, onClose }) => {
     if (task) {
       await updateTask({ id: task._id, data });
     } else {
+      data.completed = false;
+      data.reminder = false; // Reset reminder flag for new task
       await createTask(data);
     }
-    
+
     reset();
     onClose();
   };
@@ -147,7 +149,9 @@ const TaskForm = ({ task, onClose }) => {
           <option value="All">All</option>
         </select>
         {!validateTags() && (
-          <span className="error-message">At least one tag must be selected</span>
+          <span className="error-message">
+            At least one tag must be selected
+          </span>
         )}
       </div>
 

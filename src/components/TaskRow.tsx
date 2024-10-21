@@ -27,12 +27,13 @@ const TaskRow = ({ task }) => {
         <td>{task.name}</td>
         <td>{new Date(task.dueDate).toLocaleDateString()}</td>
         <td>{task.priority}</td>
-        <td>{task?.tags?.join(', ')}</td>
+        <td>{task?.tags?.join(", ")}</td>
         <td>
           <button onClick={() => setIsEditModalOpen(true)}>Edit</button>
           <button onClick={handleDelete}>Delete</button>
           <button onClick={handleMarkComplete}>
-            {task.isCompleted ? "Undo" : "Complete"}
+            {/* {task.isCompleted ? "Undo" : "Complete"} */}
+            Completed
           </button>
         </td>
       </tr>

@@ -12,7 +12,7 @@ const taskApi = baseApi.injectEndpoints({
     createTask: builder.mutation({
       query: (data) => {
         return {
-          url: "/api/tasks", // Correct API route
+          url: "/tasks", // Correct API route
           method: "POST",
           body: data,
         };
@@ -24,7 +24,7 @@ const taskApi = baseApi.injectEndpoints({
     undoDeleteTask: builder.mutation({
       query: () => {
         return {
-          url: "/api/tasks/undo", // Correct API route
+          url: "/tasks/undo", // Correct API route
           method: "POST",
         };
       },
@@ -35,7 +35,7 @@ const taskApi = baseApi.injectEndpoints({
     updateTask: builder.mutation({
       query: ({ id, data }) => {
         return {
-          url: `/api/tasks/${id}`, // Correct API route
+          url: `/tasks/${id}`, // Correct API route
           method: "PUT",
           body: data,
         };
@@ -47,7 +47,7 @@ const taskApi = baseApi.injectEndpoints({
     markAsCompleted: builder.mutation({
       query: (id) => {
         return {
-          url: `/api/tasks/${id}/complete`, // Correct API route
+          url: `/tasks/${id}/complete`, // Correct API route
           method: "PATCH",
         };
       },
@@ -58,7 +58,7 @@ const taskApi = baseApi.injectEndpoints({
     toggleReminder: builder.mutation({
       query: ({ id, reminder }) => {
         return {
-          url: `/api/tasks/${id}/reminder`, // Correct API route
+          url: `/tasks/${id}/reminder`, // Correct API route
           method: "PATCH",
           body: { reminder }, // sending reminder status in body
         };
@@ -70,7 +70,7 @@ const taskApi = baseApi.injectEndpoints({
     deleteTask: builder.mutation({
       query: (id) => {
         return {
-          url: `/api/tasks/${id}`, // Correct API route
+          url: `/tasks/${id}`, // Correct API route
           method: "DELETE",
         };
       },
@@ -85,7 +85,7 @@ const taskApi = baseApi.injectEndpoints({
           searchParams.append(element.name, element.value as string);
         });
         return {
-          url: "/api/tasks", // Correct API route
+          url: "/tasks", // Correct API route
           method: "GET",
           params: searchParams,
         };

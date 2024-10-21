@@ -2,9 +2,9 @@ import { createSlice } from '@reduxjs/toolkit';
 
 const initialState = {
   search: '',
-  status: 'All',
+  status: '',
   priority: '',
-  tag: 'All',  // Add tag state
+  tag: '',  // Add tag state
 };
 
 const filterSlice = createSlice({

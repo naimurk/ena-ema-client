@@ -8,12 +8,15 @@ const Filters = () => {
 
   const handleChange = (e) => {
     const { name, value } = e.target;
-    dispatch(setFilter({ [name]: value }));
+    if (e?.target?.value) {
+      dispatch(setFilter({ [name]: value }));
+    }
   };
 
   const handleReset = () => {
     dispatch(resetFilter());
   };
+  console.log(filters);
 
   return (
     <div className="p-4 bg-gray-100 rounded-lg shadow-md">
@@ -32,9 +35,9 @@ const Filters = () => {
           onChange={handleChange}
           className="flex-1 border border-gray-300 rounded-lg p-2 focus:outline-none focus:ring focus:ring-blue-500"
         >
-          <option value="All">All</option>
-          <option value="Completed">Completed</option>
-          <option value="Pending">Pending</option>
+          <option value="">Select Status</option>
+          <option value={true}>Completed</option>
+          <option value={false}>Pending</option>
         </select>
         <select
           name="priority"
@@ -42,7 +45,7 @@ const Filters = () => {
           onChange={handleChange}
           className="flex-1 border border-gray-300 rounded-lg p-2 focus:outline-none focus:ring focus:ring-blue-500"
         >
-          <option value="">All</option>
+          <option value="">Select Priority</option>
           <option value="Low">Low</option>
           <option value="Medium">Medium</option>
           <option value="High">High</option>
@@ -54,6 +57,7 @@ const Filters = () => {
           onChange={handleChange}
           className="flex-1 border border-gray-300 rounded-lg p-2 focus:outline-none focus:ring focus:ring-blue-500"
         >
+          <option value="">Select Tags</option>
           <option value="All">All</option>
           <option value="Work">Work</option>
           <option value="Personal">Personal</option>
@@ -67,12 +71,7 @@ const Filters = () => {
           >
             Reset
           </button>
-          <button
-            type="submit"
-            className="bg-blue-500 text-white rounded-lg px-4 py-2 hover:bg-blue-600 transition duration-200"
-          >
-            Filter
-          </button>
+          
         </div>
       </form>
     </div>

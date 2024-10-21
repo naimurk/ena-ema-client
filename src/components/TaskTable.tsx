@@ -10,9 +10,15 @@ import {
 } from "@/app/redux/features/taskApi/taskApi";
 
 const TaskTable = () => {
-  const { data: tasksData, isLoading, error } = useGetAllTasksQuery([{
-    // name : "search" , value : "Zia Kinney"
-  }]);
+  const {
+    data: tasksData,
+    isLoading,
+    error,
+  } = useGetAllTasksQuery([
+    {
+      // name : "search" , value : "Zia Kinney"
+    },
+  ]);
   const [expandedCategories, setExpandedCategories] = useState({});
   const [signalTask, setSingelTask] = useState({});
 
@@ -62,7 +68,8 @@ const TaskTable = () => {
   };
 
   if (isLoading) return <p className="text-center text-lg">Loading...</p>;
-  if (error) return <p className="text-center text-red-600">Error fetching tasks.</p>;
+  if (error)
+    return <p className="text-center text-red-600">Error fetching tasks.</p>;
 
   return (
     <div className="task-table p-6 bg-white rounded-lg shadow-md overflow-x-auto">
@@ -73,7 +80,11 @@ const TaskTable = () => {
             className="cursor-pointer text-2xl font-semibold text-gray-800 mb-4 flex justify-between items-center"
           >
             {category._id} ({category.count} tasks)
-            <span className={`ml-2 transition-transform duration-300 ${expandedCategories[category._id] ? "transform rotate-180" : ""}`}>
+            <span
+              className={`ml-2 transition-transform duration-300 ${
+                expandedCategories[category._id] ? "transform rotate-180" : ""
+              }`}
+            >
               ▼
             </span>
           </h2>
@@ -81,29 +92,68 @@ const TaskTable = () => {
             <table className="min-w-full border-collapse border border-gray-300">
               <thead>
                 <tr className="bg-gray-200">
-                  <th className="border border-gray-300 px-4 py-3 text-left text-sm font-medium text-gray-700">Task Name</th>
-                  <th className="border border-gray-300 px-4 py-3 text-left text-sm font-medium text-gray-700">Description</th>
-                  <th className="border border-gray-300 px-4 py-3 text-left text-sm font-medium text-gray-700">Due Date</th>
-                  <th className="border border-gray-300 px-4 py-3 text-left text-sm font-medium text-gray-700">Priority</th>
-                  <th className="border border-gray-300 px-4 py-3 text-left text-sm font-medium text-gray-700">Completed</th>
-                  <th className="border border-gray-300 px-4 py-3 text-left text-sm font-medium text-gray-700">Tags</th>
-                  <th className="border border-gray-300 px-4 py-3 text-left text-sm font-medium text-gray-700">Reminder</th>
-                  <th className="border border-gray-300 px-4 py-3 text-left text-sm font-medium text-gray-700">Action</th>
+                  <th className="border border-gray-300 px-4 py-3 text-left text-sm font-medium text-gray-700">
+                    Task Name
+                  </th>
+                  <th className="border border-gray-300 px-4 py-3 text-left text-sm font-medium text-gray-700">
+                    Description
+                  </th>
+                  <th className="border border-gray-300 px-4 py-3 text-left text-sm font-medium text-gray-700">
+                    Due Date
+                  </th>
+                  <th className="border border-gray-300 px-4 py-3 text-left text-sm font-medium text-gray-700">
+                    Priority
+                  </th>
+                  <th className="border border-gray-300 px-4 py-3 text-left text-sm font-medium text-gray-700">
+                    Status
+                  </th>
+                  <th className="border border-gray-300 px-4 py-3 text-left text-sm font-medium text-gray-700">
+                    Tags
+                  </th>
+                  <th className="border border-gray-300 px-4 py-3 text-left text-sm font-medium text-gray-700">
+                    Reminder
+                  </th>
+                  <th className="border border-gray-300 px-4 py-3 text-left text-sm font-medium text-gray-700">
+                    Action
+                  </th>
                 </tr>
               </thead>
               <tbody>
                 {category.tasks.map((task) => (
-                  <tr key={task._id} className="hover:bg-gray-100 transition duration-150 ease-in-out">
-                    <td className="border border-gray-300 px-4 py-2">{task.name}</td>
-                    <td className="border border-gray-300 px-4 py-2">{task.description}</td>
-                    <td className="border border-gray-300 px-4 py-2">{task.dueDate}</td>
-                    <td className="border border-gray-300 px-4 py-2">{task.priority}</td>
-                    <td className="border border-gray-300 px-4 py-2">{task.completed ? "Yes" : "No"}</td>
-                    <td className="border border-gray-300 px-4 py-2">{task.tags}</td>
+                  <tr
+                    key={task._id}
+                    className="hover:bg-gray-100 transition duration-150 ease-in-out"
+                  >
+                    <td className="border border-gray-300 px-4 py-2">
+                      {task.name}
+                    </td>
+                    <td className="border border-gray-300 px-4 py-2">
+                      {task.description}
+                    </td>
+                    <td className="border border-gray-300 px-4 py-2">
+                      {task.dueDate}
+                    </td>
+                    <td className="border border-gray-300 px-4 py-2">
+                      {task.priority}
+                    </td>
+                    <td
+                      className={`border border-gray-300 px-4 py-2 ${
+                        task.completed ? " text-gray-400" : ""
+                      }`}
+                    >
+                      {task.completed ? "Completed" : "Pending"}
+                    </td>
+                    <td className="border border-gray-300 px-4 py-2">
+                      {task.tags}
+                    </td>
                     <td className="border border-gray-300 px-4 py-2">
                       <button
                         onClick={() => handleToggleReminder(task._id)}
-                        className={`px-2 py-1 rounded ${task.reminder ? "bg-green-500 text-white" : "bg-gray-200 text-gray-800"} transition duration-150 ease-in-out`}
+                        className={`px-2 py-1 rounded ${
+                          task.reminder
+                            ? "bg-green-500 text-white"
+                            : "bg-gray-200 text-gray-800"
+                        } transition duration-150 ease-in-out`}
                       >
                         {task.reminder ? "Reminder On" : "Set Reminder"}
                       </button>

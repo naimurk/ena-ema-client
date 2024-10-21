@@ -9,9 +9,12 @@ import {
   useUpdateTaskMutation,
 } from "@/app/redux/features/taskApi/taskApi";
 import { useAppSelector } from "@/app/redux/hooks";
+import { toast } from "sonner";
+import Modal from "./Modal";
+import TaskForm from "./TaskForm";
 
 const TaskTable = () => {
-  const isDueIn24Hours = (dueDate) => {
+  const isDueIn24Hours = (dueDate: string) => {
     const currentTime = new Date().getTime();
     const taskDueTime = new Date(dueDate).getTime();
     const timeDifference = taskDueTime - currentTime;
@@ -38,20 +41,26 @@ const TaskTable = () => {
   const [updateTask] = useUpdateTaskMutation();
   const [toggleReminder] = useToggleReminderMutation();
 
-  const handleDelete = (id) => {
-    deleteTask(id);
-  };
-
-  const handleMarkComplete = (id) => {
+  const handleMarkComplete = (id: string) => {
     markComplete(id);
   };
 
-  const handleUndoDelete = (id) => {
-    UndoTheTask(id);
+  const handleUndoDelete = () => {
+    UndoTheTask("");
   };
 
-  const handleToggleReminder = (id) => {
-    toggleReminder(id);
+  const handleDelete = (id: string) => {
+    deleteTask(id);
+    toast("Event has been created", {
+      action: {
+        label: "Undo",
+        onClick: () => handleUndoDelete(),
+      },
+    });
+  };
+
+  const handleToggleReminder = (id: string, reminder: boolean) => {
+    toggleReminder({ id: id, reminder: reminder ? false : true });
   };
 
   const handleEdit = (task) => {
@@ -172,14 +181,16 @@ const TaskTable = () => {
                     </td>
                     <td className="border border-gray-300 px-4 py-2">
                       <button
-                        onClick={() => handleToggleReminder(task._id)}
+                        onClick={() =>
+                          handleToggleReminder(task._id, task?.reminder)
+                        }
                         className={`px-2 py-1 rounded ${
                           task.reminder
                             ? "bg-green-500 text-white"
                             : "bg-gray-200 text-gray-800"
                         } transition duration-150 ease-in-out`}
                       >
-                        {task.reminder ? "Reminder On" : "Set Reminder"}
+                        {task.reminder ? "Reminder Off" : "Set Reminder"}
                       </button>
                     </td>
                     <td className="border border-gray-300 px-4 py-2 flex space-x-2">
@@ -190,8 +201,9 @@ const TaskTable = () => {
                         Edit
                       </button>
                       <button
+                        disabled={task.completed}
                         onClick={() => handleMarkComplete(task._id)}
-                        className="px-3 py-1 bg-green-500 text-white rounded hover:bg-green-600 transition duration-150"
+                        className={`px-3 py-1 bg-green-500 text-white rounded hover:bg-green-600 transition duration-150 disabled:bg-green-200 disabled:cursor-not-allowed`}
                       >
                         Complete
                       </button>
@@ -209,6 +221,9 @@ const TaskTable = () => {
           )}
         </div>
       ))}
+      <Modal isOpen={isEditModalOpen} onClose={() => setIsEditModalOpen(false)}>
+        <TaskForm task={signalTask} onClose={() => setIsEditModalOpen(false)} />
+      </Modal>
     </div>
   );
 };

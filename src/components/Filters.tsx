@@ -15,7 +15,7 @@ const Filters = () => {
   const handleReset = () => {
     dispatch(resetFilter());
   };
-  console.log(filters);
+  // console.log(filters);
 
   return (
     <div className="p-4 bg-gray-100 rounded-lg shadow-md">

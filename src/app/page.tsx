@@ -4,10 +4,10 @@ import Modal from "@/components/Modal";
 import TaskForm from "@/components/TaskForm";
 import TaskTable from "@/components/TaskTable";
 import { useState } from "react";
+import { Toaster } from "sonner";
 
 export default function Home() {
   const [isModalOpen, setIsModalOpen] = useState(false);
-
   return (
     <div className="container mx-auto p-4">
       <div className="flex justify-between items-center mb-6">
@@ -35,7 +35,8 @@ export default function Home() {
         <Modal isOpen={isModalOpen} onClose={() => setIsModalOpen(false)}>
           <TaskForm onClose={() => setIsModalOpen(false)} />
         </Modal>
-      
+        <Toaster richColors />
+
     </div>
   );
 }

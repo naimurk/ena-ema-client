@@ -93,6 +93,16 @@ const taskApi = baseApi.injectEndpoints({
       },
       providesTags: ["tasks"],
     }),
+    getSingleTask: builder.query({
+      query: ({ id }) => {
+        return {
+          url: `/tasks/${id}`, // Correct API route
+          method: "GET",
+          // params: searchParams,
+        };
+      },
+      providesTags: ["tasks"],
+    }),
   }),
 });
 
@@ -104,4 +114,5 @@ export const {
   useToggleReminderMutation,
   useDeleteTaskMutation,
   useGetAllTasksQuery,
+  useGetSingleTaskQuery,
 } = taskApi;

@@ -31,11 +31,11 @@ export default function Home() {
       </div>
 
       {/* Modal for Task Form */}
-      {isModalOpen && (
-        <Modal onClose={() => setIsModalOpen(false)}>
+      
+        <Modal isOpen={isModalOpen} onClose={() => setIsModalOpen(false)}>
           <TaskForm onClose={() => setIsModalOpen(false)} />
         </Modal>
-      )}
+      
     </div>
   );
 }

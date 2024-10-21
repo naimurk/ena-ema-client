@@ -1,4 +1,3 @@
-
 export type TQueryParams = {
   name: string;
   value: boolean | React.Key;
@@ -81,9 +80,11 @@ const taskApi = baseApi.injectEndpoints({
     getAllTasks: builder.query({
       query: (params) => {
         const searchParams = new URLSearchParams();
-        params?.forEach((element) => {
-          searchParams.append(element.name, element.value as string);
-        });
+        for (const key in params) {
+          const element = params[key];
+          searchParams.append(key, element as string);
+        }
+
         return {
           url: "/tasks", // Correct API route
           method: "GET",
@@ -104,4 +105,3 @@ export const {
   useDeleteTaskMutation,
   useGetAllTasksQuery,
 } = taskApi;
-

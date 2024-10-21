@@ -8,28 +8,26 @@ import {
   useUndoDeleteTaskMutation,
   useUpdateTaskMutation,
 } from "@/app/redux/features/taskApi/taskApi";
+import { useAppSelector } from "@/app/redux/hooks";
 
 const TaskTable = () => {
-
   const isDueIn24Hours = (dueDate) => {
     const currentTime = new Date().getTime();
     const taskDueTime = new Date(dueDate).getTime();
     const timeDifference = taskDueTime - currentTime;
-  
+
     // Check if the task is due in less than 24 hours (24 * 60 * 60 * 1000 milliseconds)
     return timeDifference <= 24 * 60 * 60 * 1000;
   };
-  
+
+  const filters = useAppSelector((state) => state.filter);
 
   const {
     data: tasksData,
     isLoading,
     error,
-  } = useGetAllTasksQuery([
-    {
-      // name : "search" , value : "Zia Kinney"
-    },
-  ]);
+  } = useGetAllTasksQuery({ ...filters });
+
   const [expandedCategories, setExpandedCategories] = useState({});
   const [signalTask, setSingelTask] = useState({});
 

@@ -17,7 +17,7 @@ const Filters = () => {
 
   return (
     <div className="p-4 bg-gray-100 rounded-lg shadow-md">
-      <form className="flex flex-col space-y-4 md:flex-row md:space-x-4 md:space-y-0">
+      <form className="flex flex-col space-y-4 md:flex-row md:space-x-4 md:space-y-0 ">
         <input
           type="text"
           name="search"
@@ -59,7 +59,7 @@ const Filters = () => {
           <option value="Personal">Personal</option>
           <option value="Shopping">Shopping</option>
         </select>
-        <div className="flex flex-col md:flex-row md:space-x-4">
+        <div className="flex flex-col md:flex-row md:space-x-4 space-y-2">
           <button
             type="button"
             onClick={handleReset}

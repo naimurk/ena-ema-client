@@ -65,7 +65,7 @@ const TaskTable = () => {
   if (error) return <p className="text-center text-red-600">Error fetching tasks.</p>;
 
   return (
-    <div className="task-table p-6 bg-white rounded-lg shadow-md">
+    <div className="task-table p-6 bg-white rounded-lg shadow-md overflow-x-auto">
       {tasksData.map((category) => (
         <div key={category._id} className="mb-8">
           <h2

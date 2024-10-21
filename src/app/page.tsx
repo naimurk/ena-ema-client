@@ -9,16 +9,28 @@ export default function Home() {
   const [isModalOpen, setIsModalOpen] = useState(false);
 
   return (
-    <div className="container relative">
-      <div className="header">
-        <h1>Task Management</h1>
-        <button className="add-task-btn" onClick={() => setIsModalOpen(true)}>
+    <div className="container mx-auto p-4">
+      <div className="flex justify-between items-center mb-6">
+        <h1 className="text-xl md:text-3xl font-semibold text-gray-800">
+          Task Management
+        </h1>
+        <button
+          className="bg-blue-500 text-white rounded-md px-3 py-1 hover:bg-blue-600 transition duration-200"
+          onClick={() => setIsModalOpen(true)}
+        >
           Add Task
         </button>
       </div>
-      <Filters />
-      <TaskTable />
 
+      {/* Filters Section */}
+      <Filters />
+
+      {/* Task Table Section */}
+      <div className="mt-6">
+        <TaskTable />
+      </div>
+
+      {/* Modal for Task Form */}
       {isModalOpen && (
         <Modal onClose={() => setIsModalOpen(false)}>
           <TaskForm onClose={() => setIsModalOpen(false)} />

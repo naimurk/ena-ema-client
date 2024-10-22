@@ -17,6 +17,7 @@ const taskApi = baseApi.injectEndpoints({
         };
       },
       invalidatesTags: ["tasks"],
+      transformResponse : (res) => res 
     }),
 
     // Undo deleted task
@@ -92,6 +93,7 @@ const taskApi = baseApi.injectEndpoints({
         };
       },
       providesTags: ["tasks"],
+      
     }),
     getSingleTask: builder.query({
       query: ({ id }) => {

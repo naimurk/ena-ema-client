@@ -85,7 +85,7 @@ const TaskTable = () => {
       [categoryId]: !prev[categoryId], // Toggle the current category's expanded state
     }));
   };
-  console.log(expandedCategories);
+  // console.log(expandedCategories);
 
   if (isLoading) return <p className="text-center text-lg">Loading...</p>;
   if (error)

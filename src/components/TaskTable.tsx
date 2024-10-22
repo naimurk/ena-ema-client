@@ -6,12 +6,12 @@ import {
   useMarkAsCompletedMutation,
   useToggleReminderMutation,
   useUndoDeleteTaskMutation,
-  useUpdateTaskMutation,
 } from "@/app/redux/features/taskApi/taskApi";
 import { useAppSelector } from "@/app/redux/hooks";
 import { toast } from "sonner";
 import Modal from "./Modal";
 import TaskForm from "./TaskForm";
+import { TMainT, TTask } from "@/types/taskTypes";
 
 const TaskTable = () => {
   const isDueIn24Hours = (dueDate: string) => {
@@ -31,14 +31,15 @@ const TaskTable = () => {
     error,
   } = useGetAllTasksQuery({ ...filters });
 
-  const [expandedCategories, setExpandedCategories] = useState({});
+  const [expandedCategories, setExpandedCategories] = useState<
+    Record<string, boolean>
+  >({});
   const [signalTask, setSingelTask] = useState({});
 
   const [isEditModalOpen, setIsEditModalOpen] = useState(false);
   const [deleteTask] = useDeleteTaskMutation();
   const [markComplete] = useMarkAsCompletedMutation();
   const [UndoTheTask] = useUndoDeleteTaskMutation();
-  const [updateTask] = useUpdateTaskMutation();
   const [toggleReminder] = useToggleReminderMutation();
 
   const handleMarkComplete = (id: string) => {
@@ -63,27 +64,28 @@ const TaskTable = () => {
     toggleReminder({ id: id, reminder: reminder ? false : true });
   };
 
-  const handleEdit = (task) => {
+  const handleEdit = (task: TTask) => {
     setIsEditModalOpen(true);
     setSingelTask(task);
   };
 
   useEffect(() => {
     if (tasksData) {
-      const initialExpandedState = {};
-      tasksData.forEach((category) => {
+      const initialExpandedState: Record<string, boolean> = {};
+      tasksData.forEach((category: TMainT) => {
         initialExpandedState[category._id] = true; // Set all categories as expanded
       });
       setExpandedCategories(initialExpandedState);
     }
   }, [tasksData]);
 
-  const toggleCategory = (categoryId) => {
+  const toggleCategory = (categoryId: string) => {
     setExpandedCategories((prev) => ({
       ...prev,
       [categoryId]: !prev[categoryId], // Toggle the current category's expanded state
     }));
   };
+  console.log(expandedCategories);
 
   if (isLoading) return <p className="text-center text-lg">Loading...</p>;
   if (error)
@@ -91,7 +93,7 @@ const TaskTable = () => {
 
   return (
     <div className="task-table p-6 bg-white rounded-lg shadow-md overflow-x-auto">
-      {tasksData.map((category) => (
+      {tasksData?.map((category: TMainT) => (
         <div key={category._id} className="mb-8">
           <h2
             onClick={() => toggleCategory(category._id)}
@@ -137,7 +139,7 @@ const TaskTable = () => {
                 </tr>
               </thead>
               <tbody>
-                {category.tasks.map((task) => (
+                {category?.tasks?.map((task) => (
                   <tr
                     key={task._id}
                     className="hover:bg-gray-100 transition duration-150 ease-in-out"
@@ -221,8 +223,15 @@ const TaskTable = () => {
           )}
         </div>
       ))}
-      <Modal isOpen={isEditModalOpen} onClose={() => setIsEditModalOpen(false)}>
-        <TaskForm task={signalTask} onClose={() => setIsEditModalOpen(false)} />
+      <Modal
+        title="Edit Task"
+        isOpen={isEditModalOpen}
+        onClose={() => setIsEditModalOpen(false)}
+      >
+        <TaskForm
+          task={signalTask as TTask}
+          onClose={() => setIsEditModalOpen(false)}
+        />
       </Modal>
     </div>
   );

@@ -1,7 +1,7 @@
 import { createApi, fetchBaseQuery } from "@reduxjs/toolkit/query/react";
 
 const baseQuery = fetchBaseQuery({
-  baseUrl: "http://localhost:5000/api",
+  baseUrl: "https://ena-ema-server-tawny.vercel.app/api",
 });
 export const baseApi = createApi({
   reducerPath: "baseApi",

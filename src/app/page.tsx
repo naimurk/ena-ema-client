@@ -31,12 +31,15 @@ export default function Home() {
       </div>
 
       {/* Modal for Task Form */}
-      
-        <Modal isOpen={isModalOpen} onClose={() => setIsModalOpen(false)}>
-          <TaskForm onClose={() => setIsModalOpen(false)} />
-        </Modal>
-        <Toaster richColors />
 
+      <Modal
+        title="Create Task"
+        isOpen={isModalOpen}
+        onClose={() => setIsModalOpen(false)}
+      >
+        <TaskForm onClose={() => setIsModalOpen(false)} />
+      </Modal>
+      <Toaster richColors />
     </div>
   );
 }

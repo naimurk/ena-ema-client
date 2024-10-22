@@ -7,8 +7,9 @@ import {
 } from "@/app/redux/features/taskApi/taskApi";
 import { useForm } from "react-hook-form";
 import { useEffect, useState } from "react";
+import { TTask } from "@/types/taskTypes";
 
-const TaskForm = ({ task, onClose }) => {
+const TaskForm = ({ task, onClose }: { task?: TTask; onClose: () => void }) => {
   const {
     register,
     handleSubmit,
@@ -19,7 +20,7 @@ const TaskForm = ({ task, onClose }) => {
   });
   const [createTask] = useCreateTaskMutation();
   const [updateTask] = useUpdateTaskMutation();
-  const [selectedTags, setSelectedTags] = useState([]);
+  const [selectedTags, setSelectedTags] = useState<string[]>([]);
   const { data, isLoading, error } = useGetSingleTaskQuery(
     { id: task?._id },
     { skip: task?._id ? false : true }
@@ -27,7 +28,8 @@ const TaskForm = ({ task, onClose }) => {
 
   useEffect(() => {
     if (data) {
-      setSelectedTags([...data.tags]);
+      const tData: TTask = data;
+      setSelectedTags([...tData.tags]);
     }
   }, [data]);
 
@@ -35,7 +37,7 @@ const TaskForm = ({ task, onClose }) => {
   const validateTags = () => selectedTags.length > 0;
 
   // Custom validation for due date
-  const isDueDateInFuture = (dueDate) => {
+  const isDueDateInFuture = (dueDate: string) => {
     const today = new Date();
     const selectedDate = new Date(dueDate);
     return selectedDate > today;
@@ -70,14 +72,16 @@ const TaskForm = ({ task, onClose }) => {
     onClose();
   };
 
-  const handleTagChange = (e) => {
+  const handleTagChange = (
+    e: React.ChangeEvent<HTMLInputElement | HTMLSelectElement>
+  ) => {
     const tagValue = e.target.value;
     if (!selectedTags.includes(tagValue) && tagValue) {
       setSelectedTags([...selectedTags, tagValue]); // Add new tag
     }
   };
 
-  const removeTag = (tagToRemove) => {
+  const removeTag = (tagToRemove : string) => {
     setSelectedTags(selectedTags.filter((tag) => tag !== tagToRemove)); // Remove tag
   };
 
@@ -88,10 +92,10 @@ const TaskForm = ({ task, onClose }) => {
   return (
     <form
       onSubmit={handleSubmit(onSubmit)}
-      className="space-y-6 bg-white p-6 rounded-lg shadow-md max-w-full mx-auto "
+      className=" bg-white p-6 rounded-lg shadow-md grid grid-cols-1 items-center gap-2 md:grid-cols-2 max-w-full mx-auto "
     >
       {/* Task Name */}
-      <div className="flex flex-col">
+      <div className="flex flex-col w-full">
         <label className="text-gray-700 font-medium mb-1">Task Name</label>
         <input
           type="text"
@@ -106,24 +110,10 @@ const TaskForm = ({ task, onClose }) => {
         )}
       </div>
 
-      {/* Description */}
-      <div className="flex flex-col">
-        <label className="text-gray-700 font-medium mb-1">Description</label>
-        <textarea
-          {...register("description", { required: true })}
-          className="px-4 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500"
-          placeholder="Enter task description"
-          rows="4"
-        />
-        {errors.description && (
-          <span className="text-sm text-red-500 mt-1">
-            This field is required
-          </span>
-        )}
-      </div>
+      
 
       {/* Due Date */}
-      <div className="flex flex-col">
+      <div className="flex flex-col w-full">
         <label className="text-gray-700 font-medium mb-1">Due Date</label>
         <input
           type="date"
@@ -138,7 +128,7 @@ const TaskForm = ({ task, onClose }) => {
       </div>
 
       {/* Priority */}
-      <div className="flex flex-col">
+      <div className="flex flex-col w-full">
         <label className="text-gray-700 font-medium mb-1">Priority</label>
         <select
           {...register("priority", { required: true })}
@@ -156,8 +146,28 @@ const TaskForm = ({ task, onClose }) => {
         )}
       </div>
 
+      {/* Tags */}
+      <div className="flex flex-col w-full">
+        <label className="text-gray-700 font-medium mb-1">Tags</label>
+        <select
+          className="px-4 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500"
+          onChange={handleTagChange}
+        >
+          <option value="">Select a tag</option>
+          <option value="Work">Work</option>
+          <option value="Personal">Personal</option>
+          <option value="Shopping">Shopping</option>
+          <option value="All">All</option>
+        </select>
+        {/* {!validateTags() && (
+          <span className="text-sm text-red-500 mt-1">
+            At least one tag must be selected
+          </span>
+        )} */}
+      </div>
+
       {/* Selected Tags */}
-      <div className="flex flex-wrap gap-2">
+      <div className="flex flex-wrap gap-2 w-full md:col-span-2">
         {selectedTags?.map((tag, index) => (
           <span
             key={index}
@@ -175,28 +185,26 @@ const TaskForm = ({ task, onClose }) => {
         ))}
       </div>
 
-      {/* Tags */}
-      <div className="flex flex-col">
-        <label className="text-gray-700 font-medium mb-1">Tags</label>
-        <select
+      
+
+      {/* Description */}
+      <div className="flex flex-col w-full md:col-span-2">
+        <label className="text-gray-700 font-medium mb-1">Description</label>
+        <textarea
+          {...register("description", { required: true })}
           className="px-4 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500"
-          onChange={handleTagChange}
-        >
-          <option value="">Select a tag</option>
-          <option value="Work">Work</option>
-          <option value="Personal">Personal</option>
-          <option value="Shopping">Shopping</option>
-          <option value="All">All</option>
-        </select>
-        {!validateTags() && (
+          placeholder="Enter task description"
+          rows={4}
+        />
+        {errors.description && (
           <span className="text-sm text-red-500 mt-1">
-            At least one tag must be selected
+            This field is required
           </span>
         )}
       </div>
 
       {/* Action Buttons */}
-      <div className="flex justify-end gap-4">
+      <div className="flex justify-end gap-4 w-full md:col-span-2">
         <button
           type="submit"
           className="bg-blue-500 text-white rounded-md px-4 py-2 hover:bg-blue-600 transition duration-200"

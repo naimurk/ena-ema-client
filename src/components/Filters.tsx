@@ -6,7 +6,7 @@ const Filters = () => {
   const dispatch = useAppDispatch();
   const filters = useAppSelector((state) => state.filter);
 
-  const handleChange = (e) => {
+  const handleChange = (e: React.ChangeEvent<HTMLInputElement | HTMLSelectElement>) => {
     const { name, value } = e.target;
 
     dispatch(setFilter({ [name]: value }));

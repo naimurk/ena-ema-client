@@ -22,8 +22,8 @@ const TaskForm = ({ task, onClose }: { task?: TTask; onClose: () => void }) => {
   } = useForm({
     defaultValues: task || {},
   });
-  const [createTask] = useCreateTaskMutation();
-
+  const [createTask, { isSuccess }] = useCreateTaskMutation();
+  console.log(isSuccess);
   const [updateTask] = useUpdateTaskMutation();
   const [selectedTags, setSelectedTags] = useState<string[]>([]);
   const { data, isLoading, error } = useGetSingleTaskQuery(

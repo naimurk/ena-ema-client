@@ -22,7 +22,7 @@ const TaskForm = ({ task, onClose }: { task?: TTask; onClose: () => void }) => {
   } = useForm({
     defaultValues: task || {},
   });
-  const [createTask ] = useCreateTaskMutation();
+  const [createTask] = useCreateTaskMutation();
 
   const [updateTask] = useUpdateTaskMutation();
   const [selectedTags, setSelectedTags] = useState<string[]>([]);
@@ -30,7 +30,7 @@ const TaskForm = ({ task, onClose }: { task?: TTask; onClose: () => void }) => {
     { id: task?._id },
     { skip: task?._id ? false : true }
   );
-// console.log(isSuccess)
+  // console.log(isSuccess)
   useEffect(() => {
     if (data) {
       const tData: TTask = data;
@@ -76,6 +76,9 @@ const TaskForm = ({ task, onClose }: { task?: TTask; onClose: () => void }) => {
     reset();
     onClose();
   };
+
+  // console.log(isSuccess );
+  // console.log(updateIsloading);
 
   const handleTagChange = (
     e: React.ChangeEvent<HTMLInputElement | HTMLSelectElement>

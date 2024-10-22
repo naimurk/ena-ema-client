@@ -29,10 +29,9 @@ const TaskTable = () => {
     data: tasksData,
     isLoading,
     error,
-
   } = useGetAllTasksQuery({ ...filters });
 
-
+// console.log(isSuccess)
 
 
   // console.log({name : "query" , isSuccess})
@@ -42,10 +41,10 @@ const TaskTable = () => {
   const [signalTask, setSingelTask] = useState({});
 
   const [isEditModalOpen, setIsEditModalOpen] = useState(false);
-  const [deleteTask] = useDeleteTaskMutation();
-  const [markComplete] = useMarkAsCompletedMutation();
-  const [UndoTheTask] = useUndoDeleteTaskMutation();
-  const [toggleReminder] = useToggleReminderMutation();
+  const [deleteTask ] = useDeleteTaskMutation();
+  const [markComplete ] = useMarkAsCompletedMutation();
+  const [UndoTheTask  ] = useUndoDeleteTaskMutation();
+  const [toggleReminder ] = useToggleReminderMutation();
 
   const handleMarkComplete = (id: string) => {
     markComplete(id);
@@ -68,6 +67,8 @@ const TaskTable = () => {
   const handleToggleReminder = (id: string, reminder: boolean) => {
     toggleReminder({ id: id, reminder: reminder ? false : true });
   };
+
+//  console.log(isSuccess)
 
   const handleEdit = (task: TTask) => {
     setIsEditModalOpen(true);

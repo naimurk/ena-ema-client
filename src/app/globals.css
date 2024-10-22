@@ -4,275 +4,471 @@
 
 
 
-.container {
+.modal-overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  z-index: 50;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 0 8px; /* Equivalent to px-2 */
+  background-color: rgba(0, 0, 0, 0.5); /* Black with 50% opacity */
+}
+
+.modal-content {
+  background-color: white;
+  width: 100%;
+  max-width: 800px; /* Equivalent to max-w-2xl */
+  height: auto; /* Change to fit content */
+  max-height: 90%; /* Equivalent to h-[90%] */
+  overflow-y: auto; /* Equivalent to overflow-y-auto */
+  border-radius: 0.5rem; /* Rounded-lg */
+  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1); /* Shadow-lg */
+  position: relative;
+}
+
+.close-button {
+  position: absolute;
+  top: 0.5rem; /* Equivalent to top-2 */
+  right: 0.5rem; /* Equivalent to right-2 */
+  color: #A0AEC0; /* Equivalent to text-gray-400 */
+  transition: color 0.2s;
+}
+
+.close-button:hover {
+  color: #4A5568; /* Equivalent to hover:text-gray-600 */
+}
+
+.modal-title {
+  font-size: 1.25rem; /* Equivalent to text-xl */
+  font-weight: 600; /* Equivalent to font-semibold */
+  margin-bottom: 1rem; /* Equivalent to mb-4 */
+  color: #4A5568; /* Equivalent to text-gray-800 */
+  text-align: center; /* Centered */
+  padding-top: 0.75rem; /* Equivalent to pt-3 */
+}
+
+.modal-body {
+  color: #4A5568; /* Equivalent to text-gray-700 */
+}
+
+
+
+
+  .custom-container {
     width: 100%;
     max-width: 1200px;
     margin: 0 auto;
-    padding: 20px;
+    padding: 16px;
   }
   
-  .header {
+  .custom-flex {
     display: flex;
+  }
+  
+  .custom-justify-between {
     justify-content: space-between;
+  }
+  
+  .custom-items-center {
     align-items: center;
   }
   
-  .task-table {
-    width: 100%;
-    border-collapse: collapse;
+  .custom-mb-6 {
+    margin-bottom: 24px;
   }
   
-  .task-table th, .task-table td {
-    padding: 10px;
-    border: 1px solid #ccc;
-    text-align: left;
+  .custom-text-xl {
+    font-size: 20px; /* Default for mobile */
+}
+
+@media (min-width: 640px) { /* Adjust as needed for your tablet breakpoint */
+    .custom-text-xl {
+        font-size: 28px; /* Tablet and larger */
+    }
+}
+  
+ 
+  
+  .custom-font-semibold {
+    font-weight: 600;
   }
   
-  .add-task-btn {
-    padding: 10px 20px;
-    background-color: #0070f3;
+  .custom-text-gray-800 {
+    color: #4B5563;
+  }
+  
+  .custom-mt-6 {
+    margin-top: 24px;
+  }
+  
+  .custom-button {
+    background-color: #3B82F6;
     color: white;
-    border: none;
+    border-radius: 4px;
+    padding: 8px 12px;
+    transition: background-color 0.2s;
+  }
+  
+  .custom-button:hover {
+    background-color: #2563EB;
+  }
+  
+
+
+/* filter */
+  .filter-container {
+    padding: 16px; /* p-4 */
+    background-color: #f3f4f6; /* bg-gray-100 */
+    border-radius: 0.5rem; /* rounded-lg */
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1); /* shadow-md */
+  }
+  
+  .filter-form {
+    display: flex; /* flex */
+    flex-direction: column; /* flex-col */
+    gap: 16px; /* space-y-4 */
+  }
+  
+  @media (min-width: 768px) {
+    .filter-form {
+      flex-direction: row; /* md:flex-row */
+      gap: 5px; /* md:space-y-0 */
+    }
+  }
+  
+  .input-field,
+  .select-field {
+    flex: 1; /* flex-1 */
+    border: 1px solid #d1d5db; /* border border-gray-300 */
+    border-radius: 0.5rem; /* rounded-lg */
+    padding: 8px; /* p-2 */
+    outline: none; /* focus:outline-none */
+    transition: ring 0.3s; /* focus:ring */
+  }
+  
+  .input-field:focus,
+  .select-field:focus {
+    border-color: #3b82f6; /* focus:ring-blue-500 */
+  }
+  
+  .button-container {
+    display: flex; /* flex */
+    flex-direction: column; /* flex-col */
+  }
+  
+  @media (min-width: 768px) {
+    .button-container {
+      flex-direction: row; /* md:flex-row */
+      gap: 16px; /* md:space-x-4 */
+    }
+  }
+  
+  .reset-button {
+    background-color: #d1d5db; /* bg-gray-300 */
+    color: #4b5563; /* text-gray-800 */
+    border-radius: 0.5rem; /* rounded-lg */
+    padding: 8px 16px; /* px-4 py-2 */
+    transition: background-color 0.2s; /* transition duration-200 */
+  }
+  
+  .reset-button:hover {
+    background-color: #9ca3af; /* hover:bg-gray-400 */
+  }
+  
+
+  /* table */
+  .custom-task-table {
+    padding: 24px;
+    background-color: white;
+    border-radius: 8px;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+    overflow-x: auto;
+  }
+  
+  .custom-category {
+    margin-bottom: 32px;
+  }
+  
+  .custom-category-header {
     cursor: pointer;
-  }
-  
-  .add-task-btn:hover {
-    background-color: #005bb5;
-  }
-  
-  .form-group {
-    margin-bottom: 15px;
-  }
-  
-  .filters {
+    font-size: 1.5rem;
+    font-weight: 600;
+    color: #1F2937;
+    margin-bottom: 16px;
     display: flex;
     justify-content: space-between;
-    margin-bottom: 20px;
-  }
-
-  .completed-task {
-    text-decoration: line-through;
-    opacity: 0.6;
-  }
-  
-  
-  @media (max-width: 768px) {
-    .task-table th, .task-table td {
-      font-size: 12px;
-    }
-  
-    .filters {
-      flex-direction: column;
-    }
-  }
-
-
-
-  /* modal start */
-
-  .modal-overlay {
-    position: fixed;
-    inset: 0;
-    background-color: rgba(0, 0, 0, 0.7);
-    display: flex;
-    justify-content: center;
     align-items: center;
-    z-index: 50;
-    width: 100%;
   }
   
-  .modal-content {
+  .custom-arrow {
+    margin-left: 8px;
+    transition: transform 0.3s;
+  }
+  
+  .custom-rotate {
+    transform: rotate(180deg);
+  }
+  
+  .custom-table {
+    min-width: 100%;
+    border-collapse: collapse;
+    border: 1px solid #D1D5DB;
+  }
+  
+  .custom-table-header {
+    background-color: #E5E7EB;
+  }
+  
+  .custom-table-cell {
+    border: 1px solid #D1D5DB;
+    padding: 8px 16px;
+    text-align: left;
+    font-size: 0.875rem;
+    font-weight: 500;
+    color: #374151;
+  }
+  
+  .custom-table-row {
+    transition: background-color 0.15s ease-in-out;
+  }
+  
+  .custom-table-row:hover {
+    background-color: #F3F4F6;
+  }
+  
+  .custom-warning {
+    color: #D97706;
+    animation: pulse 1s infinite;
+    font-weight: bold;
+  }
+  
+  .custom-low {
+    color: #22C55E;
+  }
+  
+  .custom-medium {
+    color: #D97706;
+  }
+  
+  .custom-high {
+    color: #EF4444;
+  }
+  
+  .custom-completed {
+    color: #9CA3AF;
+  }
+  
+  .custom-button {
+    padding: 4px 12px;
+    border-radius: 4px;
+    transition: background-color 0.15s;
+  }
+  
+  .custom-button-active {
+    background-color: #22C55E;
+    color: white;
+  }
+  
+  .custom-button-inactive {
+    background-color: #E5E7EB;
+    color: #1F2937;
+  }
+  
+  .custom-button-edit {
+    background-color: #3B82F6;
+    color: white;
+    transition: background-color 0.15s;
+  }
+  
+  .custom-button-edit:hover {
+    background-color: #2563EB;
+  }
+  
+  .custom-button-complete {
+    background-color: #22C55E;
+    color: white;
+    transition: background-color 0.15s;
+  }
+  
+  .custom-button-complete:hover {
+    background-color: #16A34A;
+  }
+  
+  .custom-button-delete {
+    background-color: #EF4444;
+    color: white;
+    transition: background-color 0.15s;
+  }
+  
+  .custom-button-delete:hover {
+    background-color: #DC2626;
+  }
+  
+  .custom-button-disabled {
+    background-color: #E5E7EB;
+    cursor: not-allowed;
+    opacity: 0.5;
+  }
+  
+  .custom-action-cell {
+    display: flex;
+    gap: 8px; /* Adjust spacing as needed */
+  }
+  
+  
+  /* Add styles for the TaskForm component as needed */
+  
+  
+  
+/* task form */
+
+  .form {
     background-color: white;
-    padding: 1.5rem; /* 24px */
-    border-radius: 0.5rem; /* 8px */
-    box-shadow: 0 10px 15px rgba(0, 0, 0, 0.1), 0 4px 6px rgba(0, 0, 0, 0.05);
-    width: 50%;
-    position: relative;
-    /* max-width: 500px; Set a max width to limit size on larger screens */
+    padding: 24px;
+    border-radius: 8px;
+    box-shadow: 0px 4px 6px rgba(0, 0, 0, 0.1);
+    display: grid;
+    grid-template-columns: 1fr !important; /* Default for mobile devices */
+    grid-gap: 8px;
+    max-width: 100%;
+    margin: 0 auto;
   }
   
-  .close-button {
-    position: absolute;
-    top: 0.5rem; /* 8px */
-    right: 0.5rem; /* 8px */
-    color: #6b7280; /* Tailwind's gray-500 */
-    cursor: pointer;
-    transition: color 0.3s;
-  }
-  
-  .close-button:hover {
-    color: #1f2937; /* Tailwind's gray-800 */
-  }
-  
-  /* Media Query for Mobile Devices */
-  @media (max-width: 640px) {
-    .modal-content {
-      width: 100%; /* Make modal full-width on smaller screens */
-      padding: 1rem; /* Adjust padding for mobile */
+  @media (min-width: 768px) {
+    .form {
+      grid-template-columns: 1fr 1fr; /* Change to two columns on larger screens */
     }
   }
-
-  /* modal end */
-
-  /* form start */
-
-  .task-form {
-    max-width: 600px;
-    margin: 0 auto;
-    padding: 2rem;
-    background-color: #f9f9f9;
-    border-radius: 8px;
-    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+  @media (max-width: 767px) {
+    .input-group {
+      grid-column: span 2;
+      /* Change to two columns on larger screens */
+    }
   }
   
-  .form-group {
-    margin-bottom: 1.5rem;
-  }
   
-  .form-group label {
-    display: block;
-    margin-bottom: 0.5rem;
-    font-size: 1rem;
-    color: #333;
-  }
-  
-  .form-group input,
-  .form-group textarea,
-  .form-group select {
+  .input-group {
+    display: flex;
+    /* border : 1px solid red; */
+    flex-direction: column;
     width: 100%;
-    padding: 0.75rem;
-    font-size: 1rem;
-    border: 1px solid #ddd;
-    border-radius: 4px;
-    background-color: #fff;
-    box-sizing: border-box;
-    transition: border-color 0.3s ease;
+  }
+
+  
+  /* Other styles remain the same */
+  
+  
+  .label {
+    color: #4A5568;
+    font-weight: 500;
+    margin-bottom: 4px;
   }
   
-  .form-group input:focus,
-  .form-group textarea:focus,
-  .form-group select:focus {
-    border-color: #5b6dee;
+  .input {
+    padding: 8px 16px;
+    border: 1px solid #D1D5DB;
+    border-radius: 8px;
     outline: none;
   }
   
-  .form-group textarea {
+  .input:focus {
+    border-color: #3B82F6;
+    box-shadow: 0px 0px 0px 2px rgba(59, 130, 246, 0.5);
+  }
+  
+  .textarea {
     resize: vertical;
-    min-height: 100px;
   }
   
-  .form-group select {
-    cursor: pointer;
-  }
-  
-  .form-actions {
-    display: flex;
-    justify-content: flex-end;
-    gap: 1rem;
-  }
-  
-  .form-actions button {
-    padding: 0.75rem 1.5rem;
-    font-size: 1rem;
-    border: none;
-    border-radius: 4px;
-    cursor: pointer;
-    transition: background-color 0.3s ease;
-  }
-  
-  .form-actions button[type="submit"] {
-    background-color: #5b6dee;
-    color: #fff;
-  }
-  
-  .form-actions button[type="submit"]:hover {
-    background-color: #4a56cb;
-  }
-  
-  .form-actions button[type="button"] {
-    background-color: #f0f0f0;
-    color: #333;
-  }
-  
-  .form-actions button[type="button"]:hover {
-    background-color: #ddd;
-  }
-  
-  /* Media Query for Mobile Responsiveness */
-  @media (max-width: 640px) {
-    .task-form {
-      padding: 1.5rem;
-    }
-  
-    .form-actions {
-      flex-direction: column;
-      gap: 0.75rem;
-      align-items: stretch;
-    }
-  }
-
-
-  .tag {
-    display: inline-block;
-    background-color: #e2e8f0;
-    color: #1a202c;
-    border-radius: 9999px;
-    padding: 0.25rem 0.75rem;
-    margin-right: 0.5rem;
-    margin-bottom: 0.5rem;
+  .error-message {
+    color: #F56565;
     font-size: 0.875rem;
+    margin-top: 4px;
   }
-  .remove-tag {
+  
+  .tag-container {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 8px;
+    width: 100%;
+    grid-column: span 2;
+  }
+  
+  .tag {
+    display: flex;
+    align-items: center;
+    padding: 8px 16px;
+    background-color: #DBEAFE;
+    color: #1D4ED8;
+    border-radius: 9999px;
+  }
+  
+  .remove-tag-button {
+    margin-left: 8px;
+    color: #F56565;
+    cursor: pointer;
     background: none;
     border: none;
-    color: #e53e3e;
-    font-size: 1.25rem;
-    margin-left: 0.5rem;
-    cursor: pointer;
+    outline: none;
   }
-  .form-group {
-    margin-bottom: 1.5rem;
+  
+  .remove-tag-button:hover {
+    color: #E53E3E;
   }
-  .input-field {
-    width: 100%;
-    padding: 0.75rem;
-    border: 1px solid #cbd5e0;
-    border-radius: 0.375rem;
+  
+  .full-width {
+    grid-column: span 2;
   }
-  .form-actions {
+  
+  .action-buttons {
     display: flex;
-    justify-content: space-between;
+    justify-content: flex-end;
+    gap: 16px;
+    grid-column: span 2;
   }
-  .submit-btn, .cancel-btn {
-    background-color: #4c51bf;
-    color: #fff;
-    padding: 0.5rem 1rem;
-    border-radius: 0.375rem;
+  
+  .submit-button {
+    background-color: #3B82F6;
+    color: white;
+    border-radius: 8px;
+    padding: 8px 16px;
     cursor: pointer;
+    transition: background-color 0.2s;
+    border: none;
   }
-  .submit-btn {
-    background-color: #38a169;
+  
+  .submit-button:hover {
+    background-color: #2563EB;
+  }
+  
+  .cancel-button {
+    background-color: #E5E7EB;
+    color: #4A5568;
+    border-radius: 8px;
+    padding: 8px 16px;
+    cursor: pointer;
+    transition: background-color 0.2s;
+    border: none;
+  }
+  
+  .cancel-button:hover {
+    background-color: #D1D5DB;
   }
 
-
-  .category-header {
-    @apply bg-gray-200 p-2 text-lg cursor-pointer;
+  .text-center {
+    text-align: center;
   }
   
-  .category-group {
-    @apply mb-4;
+  .text-lg {
+    font-size: 1.125rem; /* 18px */
   }
   
-  .task-table table {
-    @apply w-full table-auto text-left;
-  }
-  
-  .task-table th, .task-table td {
-    @apply p-2;
+  .text-red-600 {
+    color: #dc2626; /* A deep red color */
   }
   
   
-  
-  
-
-

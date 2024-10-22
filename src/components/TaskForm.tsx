@@ -8,6 +8,10 @@ import {
 import { useForm } from "react-hook-form";
 import { useEffect, useState } from "react";
 import { TTask } from "@/types/taskTypes";
+// import { toast } from "sonner";
+// type MutationError = {
+//   message?: string; // Optional message field
+// };
 
 const TaskForm = ({ task, onClose }: { task?: TTask; onClose: () => void }) => {
   const {
@@ -19,6 +23,7 @@ const TaskForm = ({ task, onClose }: { task?: TTask; onClose: () => void }) => {
     defaultValues: task || {},
   });
   const [createTask] = useCreateTaskMutation();
+
   const [updateTask] = useUpdateTaskMutation();
   const [selectedTags, setSelectedTags] = useState<string[]>([]);
   const { data, isLoading, error } = useGetSingleTaskQuery(
@@ -81,7 +86,7 @@ const TaskForm = ({ task, onClose }: { task?: TTask; onClose: () => void }) => {
     }
   };
 
-  const removeTag = (tagToRemove : string) => {
+  const removeTag = (tagToRemove: string) => {
     setSelectedTags(selectedTags.filter((tag) => tag !== tagToRemove)); // Remove tag
   };
 
@@ -90,94 +95,64 @@ const TaskForm = ({ task, onClose }: { task?: TTask; onClose: () => void }) => {
     return <p className="text-center text-red-600">Error fetching tasks.</p>;
 
   return (
-    <form
-      onSubmit={handleSubmit(onSubmit)}
-      className=" bg-white p-6 rounded-lg shadow-md grid grid-cols-1 items-center gap-2 md:grid-cols-2 max-w-full mx-auto "
-    >
-      {/* Task Name */}
-      <div className="flex flex-col w-full">
-        <label className="text-gray-700 font-medium mb-1">Task Name</label>
+    <form onSubmit={handleSubmit(onSubmit)} className="form">
+      <div className="input-group">
+        <label className="label">Task Name</label>
         <input
           type="text"
           {...register("name", { required: true })}
-          className="px-4 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500"
+          className="input"
           placeholder="Enter task name"
         />
         {errors.name && (
-          <span className="text-sm text-red-500 mt-1">
-            This field is required
-          </span>
+          <span className="error-message">This field is required</span>
         )}
       </div>
 
-      
-
-      {/* Due Date */}
-      <div className="flex flex-col w-full">
-        <label className="text-gray-700 font-medium mb-1">Due Date</label>
+      <div className="input-group">
+        <label className="label">Due Date</label>
         <input
           type="date"
           {...register("dueDate", { required: true })}
-          className="px-4 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500"
+          className="input"
         />
         {errors.dueDate && (
-          <span className="text-sm text-red-500 mt-1">
-            This field is required
-          </span>
+          <span className="error-message">This field is required</span>
         )}
       </div>
 
-      {/* Priority */}
-      <div className="flex flex-col w-full">
-        <label className="text-gray-700 font-medium mb-1">Priority</label>
-        <select
-          {...register("priority", { required: true })}
-          className="px-4 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500"
-        >
+      <div className="input-group">
+        <label className="label">Priority</label>
+        <select {...register("priority", { required: true })} className="input">
           <option value="">Select priority</option>
           <option value="Low">Low</option>
           <option value="Medium">Medium</option>
           <option value="High">High</option>
         </select>
         {errors.priority && (
-          <span className="text-sm text-red-500 mt-1">
-            This field is required
-          </span>
+          <span className="error-message">This field is required</span>
         )}
       </div>
 
-      {/* Tags */}
-      <div className="flex flex-col w-full">
-        <label className="text-gray-700 font-medium mb-1">Tags</label>
-        <select
-          className="px-4 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500"
-          onChange={handleTagChange}
-        >
+      <div className="input-group">
+        <label className="label">Tags</label>
+        <select className="input" onChange={handleTagChange}>
           <option value="">Select a tag</option>
           <option value="Work">Work</option>
           <option value="Personal">Personal</option>
           <option value="Shopping">Shopping</option>
           <option value="All">All</option>
         </select>
-        {/* {!validateTags() && (
-          <span className="text-sm text-red-500 mt-1">
-            At least one tag must be selected
-          </span>
-        )} */}
       </div>
 
-      {/* Selected Tags */}
-      <div className="flex flex-wrap gap-2 w-full md:col-span-2">
+      <div className="tag-container">
         {selectedTags?.map((tag, index) => (
-          <span
-            key={index}
-            className="px-3 py-1 bg-blue-100 text-blue-700 rounded-full flex items-center"
-          >
+          <span key={index} className="tag">
             {tag}
             <button
               type="button"
               onClick={() => removeTag(tag)}
-              className="ml-2 text-red-500 hover:text-red-700 focus:outline-none"
+              className="remove-tag-button"
             >
               &times;
             </button>
@@ -185,37 +160,24 @@ const TaskForm = ({ task, onClose }: { task?: TTask; onClose: () => void }) => {
         ))}
       </div>
 
-      
-
-      {/* Description */}
-      <div className="flex flex-col w-full md:col-span-2">
-        <label className="text-gray-700 font-medium mb-1">Description</label>
+      <div className="input-group full-width">
+        <label className="label">Description</label>
         <textarea
           {...register("description", { required: true })}
-          className="px-4 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500"
+          className="input textarea"
           placeholder="Enter task description"
           rows={4}
         />
         {errors.description && (
-          <span className="text-sm text-red-500 mt-1">
-            This field is required
-          </span>
+          <span className="error-message">This field is required</span>
         )}
       </div>
 
-      {/* Action Buttons */}
-      <div className="flex justify-end gap-4 w-full md:col-span-2">
-        <button
-          type="submit"
-          className="bg-blue-500 text-white rounded-md px-4 py-2 hover:bg-blue-600 transition duration-200"
-        >
+      <div className="action-buttons">
+        <button type="submit" className="submit-button">
           Submit
         </button>
-        <button
-          type="button"
-          onClick={onClose}
-          className="bg-gray-200 text-gray-700 rounded-md px-4 py-2 hover:bg-gray-300 transition duration-200"
-        >
+        <button type="button" onClick={onClose} className="cancel-button">
           Cancel
         </button>
       </div>

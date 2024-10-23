@@ -8,12 +8,68 @@ import {
 import { useForm } from "react-hook-form";
 import { useEffect, useState } from "react";
 import { TTask } from "@/types/taskTypes";
+import { toast } from "sonner";
 // import { toast } from "sonner";
 // type MutationError = {
 //   message?: string; // Optional message field
 // };
 
 const TaskForm = ({ task, onClose }: { task?: TTask; onClose: () => void }) => {
+  const [
+    createTask,
+    {
+      isSuccess: cIsSuccess,
+      isLoading: cIsLoading,
+      isError: cIsError,
+      error: cError,
+    },
+  ] = useCreateTaskMutation();
+  const [
+    updateTask,
+    {
+      isSuccess: uIsSuccess,
+      isLoading: uIsLoading,
+      isError: uIsError,
+      error: uError,
+    },
+  ] = useUpdateTaskMutation();
+
+  // Show notifications for createTask
+  useEffect(() => {
+    if (cIsLoading) {
+      toast.loading("Creating task..." ,  {id : 1});
+    } else if (cIsSuccess) {
+      toast.success("Task created successfully!" , {id : 1});
+      reset();
+      onClose();
+    } else if (cIsError) {
+      const err = cError as { message: string };
+      toast.error(
+        `Error creating task: ${err?.message || "Something went wrong."}`, {id : 1}
+      );
+    }
+  }, [cIsLoading, cIsSuccess, cIsError, cError]);
+
+  // Show notifications for updateTask
+  useEffect(() => {
+    if (uIsLoading) {
+      toast.loading("Updating task...", { id: 1 });
+    } else if (uIsSuccess) {
+      toast.success("Task updated successfully!", { id: 1 });
+      reset();
+      onClose();
+    } else if (uIsError) {
+      const err = uError as { message: string };
+
+      toast.error(
+        `Error updating task: ${err?.message || "Something went wrong."}`,
+        { id: 1 }
+      );
+    }
+  }, [uIsLoading, uIsSuccess, uIsError, uError]);
+
+  // Now you can access these variables in your component to handle different states.
+
   const {
     register,
     handleSubmit,
@@ -22,9 +78,7 @@ const TaskForm = ({ task, onClose }: { task?: TTask; onClose: () => void }) => {
   } = useForm({
     defaultValues: task || {},
   });
-  const [createTask, { isSuccess }] = useCreateTaskMutation();
-  console.log(isSuccess);
-  const [updateTask] = useUpdateTaskMutation();
+
   const [selectedTags, setSelectedTags] = useState<string[]>([]);
   const { data, isLoading, error } = useGetSingleTaskQuery(
     { id: task?._id },
@@ -48,7 +102,7 @@ const TaskForm = ({ task, onClose }: { task?: TTask; onClose: () => void }) => {
     return selectedDate > today;
   };
 
-  const onSubmit = async (data: any) => {
+  const onSubmit = (data: any) => {
     // Assign selected tags to the form data
     data.tags = selectedTags;
 
@@ -66,20 +120,15 @@ const TaskForm = ({ task, onClose }: { task?: TTask; onClose: () => void }) => {
 
     // Proceed to create or update the task
     if (task) {
-      await updateTask({ id: task._id, data });
+      updateTask({ id: task._id, data });
     } else {
       data.completed = false;
       data.reminder = false; // Reset reminder flag for new task
-      await createTask(data);
+      createTask(data);
     }
-
-    reset();
-    onClose();
   };
 
-  // console.log(isSuccess );
-  // console.log(updateIsloading);
-
+  // console.log(isSuccess);
   const handleTagChange = (
     e: React.ChangeEvent<HTMLInputElement | HTMLSelectElement>
   ) => {

@@ -7,6 +7,33 @@ import { baseApi } from "../../api/baseApi"; // assuming baseApi is pre-configur
 
 const taskApi = baseApi.injectEndpoints({
   endpoints: (builder) => ({
+    // Get all tasks with optional filtering
+    getAllTasks: builder.query({
+      query: (params) => {
+        const searchParams = new URLSearchParams();
+        for (const key in params) {
+          const element = params[key];
+          searchParams.append(key, element as string);
+        }
+
+        return {
+          url: "/tasks", // Correct API route
+          method: "GET",
+          params: searchParams,
+        };
+      },
+      providesTags: ["tasks"],
+    }),
+    getSingleTask: builder.query({
+      query: ({ id }) => {
+        return {
+          url: `/tasks/${id}`, // Correct API route
+          method: "GET",
+          // params: searchParams,
+        };
+      },
+      providesTags: ["tasks"],
+    }),
     // Create a task
     createTask: builder.mutation({
       query: (data) => {
@@ -17,7 +44,7 @@ const taskApi = baseApi.injectEndpoints({
         };
       },
       invalidatesTags: ["tasks"],
-      // transformResponse : (res) => res 
+      // transformResponse : (res) => res
     }),
 
     // Undo deleted task
@@ -76,35 +103,6 @@ const taskApi = baseApi.injectEndpoints({
       },
       invalidatesTags: ["tasks"],
     }),
-
-    // Get all tasks with optional filtering
-    getAllTasks: builder.query({
-      query: (params) => {
-        const searchParams = new URLSearchParams();
-        for (const key in params) {
-          const element = params[key];
-          searchParams.append(key, element as string);
-        }
-
-        return {
-          url: "/tasks", // Correct API route
-          method: "GET",
-          params: searchParams,
-        };
-      },
-      providesTags: ["tasks"],
-      
-    }),
-    getSingleTask: builder.query({
-      query: ({ id }) => {
-        return {
-          url: `/tasks/${id}`, // Correct API route
-          method: "GET",
-          // params: searchParams,
-        };
-      },
-      providesTags: ["tasks"],
-    }),
   }),
 });
 
@@ -117,4 +115,5 @@ export const {
   useDeleteTaskMutation,
   useGetAllTasksQuery,
   useGetSingleTaskQuery,
+  useCreateTestMutation,
 } = taskApi;

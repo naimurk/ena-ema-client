@@ -8,6 +8,7 @@ import { Toaster } from "sonner";
 
 export default function Home() {
   const [isModalOpen, setIsModalOpen] = useState(false);
+  
   return (
     <div className="custom-container">
     <div className="custom-flex custom-justify-between custom-items-center custom-mb-6">

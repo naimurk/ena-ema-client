@@ -115,5 +115,4 @@ export const {
   useDeleteTaskMutation,
   useGetAllTasksQuery,
   useGetSingleTaskQuery,
-  useCreateTestMutation,
 } = taskApi;

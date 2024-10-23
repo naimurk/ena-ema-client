@@ -44,7 +44,7 @@ const TaskTable = () => {
   const [
     deleteTask,
     {
-      isSuccess: dIsSuccess,
+      // isSuccess: dIsSuccess,
       // isLoading: dIsLoading,
       isError: dIsError,
       error: dError,
@@ -80,15 +80,6 @@ const TaskTable = () => {
 
   // Effect for deleteTask
   useEffect(() => {
-    if (dIsSuccess) {
-      toast("Event has been created", {
-        action: {
-          label: "Undo",
-          onClick: () => handleUndoDelete(),
-        },
-        id : 1
-      });
-    }
     if (dIsError) {
       const err = dError as { message: string };
 
@@ -97,7 +88,7 @@ const TaskTable = () => {
         { id: 1 }
       );
     }
-  }, [dIsError, dError , dIsSuccess]);
+  }, [dIsError, dError]);
 
   // Effect for markComplete
   useEffect(() => {
@@ -160,6 +151,12 @@ const TaskTable = () => {
 
   const handleDelete = (id: string) => {
     deleteTask(id);
+    toast("Event has been created", {
+      action: {
+        label: "Undo",
+        onClick: () => handleUndoDelete(),
+      },
+    });
   };
 
   const handleToggleReminder = (id: string, reminder: boolean) => {

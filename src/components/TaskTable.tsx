@@ -156,6 +156,8 @@ const TaskTable = () => {
         label: "Undo",
         onClick: () => handleUndoDelete(),
       },
+      position : "top-right",
+      id : "undo1"
     });
   };
 
